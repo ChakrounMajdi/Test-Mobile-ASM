@@ -2,9 +2,17 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:test_mobile_asm/model/covid_model.dart';
 
+const _baseUrl = 'https://api.covidtracking.com/v1';
+
 class ApiCovidTracking {
-  final Dio _dio = Dio();
-  final _baseUrl = 'https://api.covidtracking.com/v1';
+  BaseOptions options = BaseOptions(
+    baseUrl: _baseUrl,
+    receiveDataWhenStatusError: true,
+    connectTimeout: 20 * 1000,
+    receiveTimeout: 20 * 1000,
+  );
+
+  late final Dio _dio = Dio(options);
 
   Future<List<CovidModel>> getCovidList() async {
     List<CovidModel> covidList = [];
